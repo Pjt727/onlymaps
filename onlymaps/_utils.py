@@ -15,7 +15,6 @@ from importlib import import_module
 from types import ModuleType
 from typing import (
     TYPE_CHECKING,
-    TypeAlias,
     Any,
     AsyncContextManager,
     AsyncIterator,
@@ -23,6 +22,7 @@ from typing import (
     Callable,
     ContextManager,
     Never,
+    TypeAlias,
     TypeVar,
     Union,
     cast,
@@ -51,6 +51,10 @@ if TYPE_CHECKING:
         AsyncPyDbAPIv2Module,
     )
 
+# may add future types such as templates later
+_BaseQueryTypes: TypeAlias = str | bytes
+QueryString: TypeAlias = _BaseQueryTypes
+
 ConnInfo = tuple[Driver, str, int, str, str, str | None]
 
 SafeCursor = Callable[[], ContextManager[PyDbAPIv2Cursor]]
@@ -60,15 +64,6 @@ PyDbAPIv2ConnectionFactory = Callable[
     PyDbAPIv2Connection,
 ]
 AsyncPyDbAPIv2ConnectionFactory = Callable[[], Awaitable["AsyncPyDbAPIv2Connection"]]
-
-_BaseQueryTypes: TypeAlias = str | bytes
-
-if sys.version_info >= (3, 14):
-    from string.templatelib import Template
-
-    QueryString: TypeAlias = _BaseQueryTypes | Template
-else:
-    QueryString: TypeAlias = _BaseQueryTypes
 
 T = TypeVar("T")
 C = TypeVar("C", bound=Callable)
