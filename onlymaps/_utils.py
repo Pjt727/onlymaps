@@ -52,7 +52,7 @@ if TYPE_CHECKING:
     )
 
 # may add future types such as templates later
-_BaseQueryTypes: TypeAlias = str | bytes
+_BaseQueryTypes: TypeAlias = str
 QueryString: TypeAlias = _BaseQueryTypes
 
 ConnInfo = tuple[Driver, str, int, str, str, str | None]
